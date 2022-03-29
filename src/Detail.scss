@@ -1,0 +1,23 @@
+
+$메인칼라 : #ff0000;
+
+.red{
+    color: $메인칼라;
+}
+
+.my-alert{
+    background-color: #eeeeee;
+    border-radius: 5px;
+    padding: 20px;
+    max-width:500px;
+    width:100%;
+    margin : auto;
+    & p {
+        margin-bottom: 0;
+    };
+}
+
+.my-alert2 {
+    @extend .my-alert;
+    background: #ffe591;
+}

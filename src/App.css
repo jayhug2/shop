@@ -6,6 +6,17 @@
   height: 40vmin;
   pointer-events: none;
 }
+a, a:hover{
+  text-decoration: none;
+  color: black;
+}
+
+.background {
+  background-image: url('./background.jpg');
+  background-size: cover;
+  color: white;
+  background-position: center;
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
