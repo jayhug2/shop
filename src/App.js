@@ -1,10 +1,11 @@
 import './App.css';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Jumbotron, Button} from 'react-bootstrap';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Data from './data.js';
 import { Route, Switch, Link } from 'react-router-dom'
 import Detail from './Detail';
 import axios from 'axios';
+import Cart from './Cart.js'
 
 const Card = ({shoes,i}) => {
   return (
@@ -15,9 +16,20 @@ const Card = ({shoes,i}) => {
       </Link>
       <p>{shoes.content}</p>
       <p>{`${Number(shoes.price).toLocaleString()}원`}</p>
+      <Test i={i}/>
     </div>
   )
 }
+const Test = ({i}) => {
+  let 재고 = useContext(StockContext);
+  return (
+    <p>재고 : {`${재고[i]} EA`}</p>
+  )
+}
+
+let StockContext = React.createContext();
+
+
 
 function App() {
   let [shoes, shoes변경] = useState(Data);
@@ -60,9 +72,14 @@ function App() {
             </p>
           </Jumbotron>
           <div className="container">
+
+            
+            <StockContext.Provider value={재고}>
             <div className="row">
               { shoes.map((p,i) => <Card key={p.id} shoes={p} i={i}/> ) }
             </div>
+            </StockContext.Provider>
+            
             <button className="btn btn-primary" onClick={() => {
               axios.get('https://codingapple1.github.io/shop/data2.json')
               .then((result) => {
@@ -82,6 +99,10 @@ function App() {
             재고={재고}
             재고변경={재고변경}  
           />
+        </Route>
+
+        <Route path={`/cart`}>
+          <Cart />
         </Route>
         <Route paht="/:id">
           <div>아무거나 적었을때 이거보여주세요</div>
