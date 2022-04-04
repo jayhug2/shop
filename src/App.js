@@ -6,14 +6,14 @@ import { Route, Switch, Link } from 'react-router-dom'
 import Detail from './Detail';
 import axios from 'axios';
 import Cart from './Cart.js'
+import { useHistory } from 'react-router-dom';
 
 const Card = ({shoes,i}) => {
+  let history = useHistory()
   return (
-    <div className="col-md-4">
-      <Link to={`/detail/${shoes.id}`}>
-        <img src={"https://codingapple1.github.io/shop/shoes"+(i+1)+".jpg"} width="100%" alt={shoes.title}/>
-        <h4>{shoes.title}</h4>
-      </Link>
+    <div className="col-md-4" onClick={() => { history.push(`detail/${shoes.id}`)}}>
+      <img src={"https://codingapple1.github.io/shop/shoes"+(i+1)+".jpg"} width="100%" alt={shoes.title}/>
+      <h4>{shoes.title}</h4>
       <p>{shoes.content}</p>
       <p>{`${Number(shoes.price).toLocaleString()}원`}</p>
       <Test i={i}/>
@@ -44,7 +44,7 @@ function App() {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
             <Nav.Link as={Link} to={`/`}>Home</Nav.Link>
-            <Nav.Link as={Link} to={`/detail`}>Detail</Nav.Link>
+            <Nav.Link as={Link} to={`/cart`}>Cart</Nav.Link>
             <NavDropdown title="Dropdown" id="basic-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
               <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

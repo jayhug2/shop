@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import './Detail.scss'
 import { Nav } from 'react-bootstrap';
 import { CSSTransition } from 'react-transition-group';
+import { connect } from "react-redux";
 
 
 const Box = styled.div`
@@ -13,7 +14,7 @@ const Inbox = styled.h4`
     font-size: 25px;
 `
 
-function Detail({shoes, 재고, 재고변경}){
+function Detail(props){
     useEffect(() => {
         let 타이머 = setTimeout(() => {
             alert변경(false);
@@ -47,21 +48,23 @@ function Detail({shoes, 재고, 재고변경}){
             
             <div className="row">
                 <div className="col-md-6">
-                <img src={"https://codingapple1.github.io/shop/shoes"+(Number(id)+1)+".jpg"} width="100%" alt={shoes[id].title}/>
+                <img src={"https://codingapple1.github.io/shop/shoes"+(Number(id)+1)+".jpg"} width="100%" alt={props.shoes[id].title}/>
                 </div>
                 <div className="col-md-6 mt-4">
-                <h4 className="pt-5">{shoes[id].title}</h4>
-                <p>{shoes[id].content}</p>
-                <p>{`${Number(shoes[id].price).toLocaleString()}원`}</p>
+                <h4 className="pt-5">{props.shoes[id].title}</h4>
+                <p>{props.shoes[id].content}</p>
+                <p>{`${Number(props.shoes[id].price).toLocaleString()}원`}</p>
                 <Info
-                  재고={재고}
+                  재고={props.재고}
                   id={id}  
                 />
 
                 <button className="btn btn-danger" onClick={() => {
-                  let 바뀐재고 = [...재고];
+                  let 바뀐재고 = [...props.재고];
                   바뀐재고[id] -= 1;
-                  재고변경(바뀐재고);
+                  props.재고변경(바뀐재고);
+                  props.dispatch({type : '항목추가', payload : {id : props.shoes[id].id, name: props.shoes[id].title , quan : 1}});
+                  history.push('/cart');
                 }}>주문하기</button> 
                 <button className="btn btn-danger" onClick={() => {
                     history.push('/')
@@ -110,4 +113,12 @@ function Info({재고, id}){
   )
 }
 
-export default Detail;
+function state를props화({reducer, reducer2}){
+  
+  return {
+    state : reducer,
+    alert열렸니 : reducer2
+  }
+}
+
+export default connect(state를props화)(Detail)
